@@ -1,19 +1,17 @@
 import ArgumentParser
 import Foundation
 
-extension PuzzleSolverCommand {
-    static let solvers: [any PuzzleSolver] = [
-       Day1Solver(),
-       // Your solvers for other days here...
-    ]
-}
+let solvers: [any PuzzleSolver] = [
+    Day1Solver(),
+    // Your solvers for other days here...
+]
 
-protocol PuzzleSolver {
-    func solve(_ inputData: String, part: PuzzlePart) -> String?
+protocol PuzzleSolver: Sendable {
+    func solve(_ inputData: String, part: PuzzlePart) async -> String?
 }
 
 /// Each Puzzle has two parts
-enum PuzzlePart: String, Codable, CaseIterable {
+enum PuzzlePart: String, Codable, CaseIterable, Sendable {
     case one
     case two
 }
@@ -21,7 +19,7 @@ enum PuzzlePart: String, Codable, CaseIterable {
 // MARK: - Solver Command
 
 @main
-struct PuzzleSolverCommand: ParsableCommand {
+struct PuzzleSolverCommand: AsyncParsableCommand {
     @Option(name: .long, help: "Day number for a puzzle.")
     var day: Int = 1
 
@@ -36,7 +34,7 @@ struct PuzzleSolverCommand: ParsableCommand {
         return part
     }
 
-    mutating func run() throws {
+    mutating func run() async throws {
         guard let inputData = try? String(contentsOf: input, encoding: .utf8) else {
             print("Failed to read input file")
             return
@@ -45,15 +43,15 @@ struct PuzzleSolverCommand: ParsableCommand {
         print("Loaded input! ")
         print("Input lines count: \(inputData.count)")
 
-        guard Self.solvers.count >= day, day > 0 else {
+        guard solvers.count >= day, day > 0 else {
             print("No puzzle solver for day #\(day)")
             return
         }
 
         print()
-        let solver = Self.solvers[day - 1]
+        let solver = solvers[day - 1]
 
-        if let solution = solver.solve(inputData, part: part) {
+        if let solution = await solver.solve(inputData, part: part) {
             print("The answer is...")
             print(solution)
         } else {

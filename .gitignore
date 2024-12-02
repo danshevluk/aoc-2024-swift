@@ -8,3 +8,6 @@ DerivedData/
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
 .vscode
+
+inputs/*
+!inputs/day1-example

@@ -1,17 +1,21 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "advent-of-code",
+    platforms: [
+        .macOS(.v15)
+    ],
     products: [
         .executable(
             name: "solve-aoc",
-            targets: ["AdventOfCode"]),
+            targets: ["AdventOfCode"]
+        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMajor(from: "1.2.0"))
+        .package(url: "https://github.com/apple/swift-argument-parser", .upToNextMajor(from: "1.5.0"))
     ],
     targets: [
         .executableTarget(
