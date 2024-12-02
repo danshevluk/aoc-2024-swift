@@ -10,4 +10,4 @@ DerivedData/
 .vscode
 
 inputs/*
-!inputs/day1-example
+!inputs/*-example
