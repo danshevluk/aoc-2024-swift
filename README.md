@@ -1,4 +1,4 @@
-# Advent of Code {year}
+# Advent of Code 2024
 
 🎄 This is a template for solving [Advent of Code](https://adventofcode.com) puzzles in Swift!
 
