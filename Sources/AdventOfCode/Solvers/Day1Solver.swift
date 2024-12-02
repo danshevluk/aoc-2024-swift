@@ -1,5 +1,5 @@
 struct Day1Solver: PuzzleSolver {
-    func solve(_ inputData: String, part: PuzzlePart) async -> String? {
+    func solve(_ inputData: String, part: PuzzlePart) -> String? {
         switch part {
         case .one:
             return solvePart1(inputData)

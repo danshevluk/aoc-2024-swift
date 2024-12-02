@@ -3,11 +3,11 @@ import Foundation
 
 let solvers: [any PuzzleSolver] = [
     Day1Solver(),
-    // Your solvers for other days here...
+    Day2Solver(),
 ]
 
 protocol PuzzleSolver: Sendable {
-    func solve(_ inputData: String, part: PuzzlePart) async -> String?
+    func solve(_ inputData: String, part: PuzzlePart) -> String?
 }
 
 /// Each Puzzle has two parts
@@ -51,7 +51,7 @@ struct PuzzleSolverCommand: AsyncParsableCommand {
         print()
         let solver = solvers[day - 1]
 
-        if let solution = await solver.solve(inputData, part: part) {
+        if let solution = solver.solve(inputData, part: part) {
             print("The answer is...")
             print(solution)
         } else {
