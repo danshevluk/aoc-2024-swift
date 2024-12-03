@@ -22,7 +22,11 @@ private func solvePart1(_ inputData: String) -> String? {
 }
 
 private func solvePart2(_ inputData: String) -> String? {
-    let pattern = /(?x) (?<mul>mul\((?<x>\d{1,3}),(?<y>\d{1,3})\)) | (?<do>do\(\)) | (?<dont>don't\(\))/
+    let pattern = #/
+        (?<mul>mul\((?<x>\d{1,3}),(?<y>\d{1,3})\))
+        | (?<do>do\(\))
+        | (?<dont>don't\(\))
+    /#
 
     var executionEnabled = true
     var recoveredSum = 0
