@@ -1,19 +1,37 @@
 import ArgumentParser
 import Foundation
 
-let solvers: [any PuzzleSolver] = [
-    Day1Solver(),
-    Day2Solver(),
-]
+struct PuzzleSolver {
+    var solvePart1:  (_ inputData: String) -> String? = { _ in nil }
+    var solvePart2: (_ inputData: String) -> String? = { _ in nil }
 
-protocol PuzzleSolver: Sendable {
-    func solve(_ inputData: String, part: PuzzlePart) -> String?
+    func solve(_ inputData: String, part: PuzzlePart) -> String? {
+        switch part {
+        case .one:
+            return solvePart1(inputData)
+        case .two:
+            return solvePart2(inputData)
+        }
+    }
 }
 
-/// Each Puzzle has two parts
-enum PuzzlePart: String, Codable, CaseIterable, Sendable {
+enum PuzzlePart: String, Codable, CaseIterable {
     case one
     case two
+}
+
+enum Solvers {
+    static var empty: PuzzleSolver { .init() }
+    static func make(for day: Int) -> PuzzleSolver {
+        switch day {
+        case 1:
+            return Solvers.day1
+        case 2:
+            return Solvers.day2
+        default:
+            return empty
+        }
+    }
 }
 
 // MARK: - Solver Command
@@ -40,22 +58,17 @@ struct PuzzleSolverCommand: AsyncParsableCommand {
             return
         }
 
-        print("Loaded input! ")
+        print("Loaded input!")
         print("Input lines count: \(inputData.count)")
 
-        guard solvers.count >= day, day > 0 else {
-            print("No puzzle solver for day #\(day)")
-            return
-        }
-
+        let solver = Solvers.make(for: day)
         print()
-        let solver = solvers[day - 1]
 
         if let solution = solver.solve(inputData, part: part) {
             print("The answer is...")
             print(solution)
         } else {
-            print("No solution for part \'\(part.rawValue)\'")
+            print("No solution for day \(day), part \'\(part.rawValue)\'")
         }
     }
 }
