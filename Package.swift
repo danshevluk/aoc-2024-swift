@@ -4,9 +4,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "advent-of-code",
+    name: "advent-of-code-2024",
     platforms: [
-        .macOS(.v15)
+        .macOS(.v14),
     ],
     products: [
         .executable(
