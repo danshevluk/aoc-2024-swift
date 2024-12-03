@@ -28,6 +28,8 @@ enum Solvers {
             return Solvers.day1
         case 2:
             return Solvers.day2
+        case 3:
+            return Solvers.day3
         default:
             return empty
         }
